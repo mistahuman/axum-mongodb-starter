@@ -25,7 +25,7 @@ type ApiResult<T> = Result<T, ApiError>;
 
 pub fn router() -> Router<Arc<AppState>> {
     Router::new()
-        .route("/exampleitems/", get(list_exampleitems).post(create_exampleitem))
+        .route("/exampleitems", get(list_exampleitems).post(create_exampleitem))
         .route("/exampleitems/{id}", get(get_exampleitem).patch(update_exampleitem).delete(delete_exampleitem))
 }
 

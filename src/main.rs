@@ -4,6 +4,7 @@ use axum::{Json, Router, extract::State, routing::get};
 use mongodb::Client;
 use serde_json::{Value, json};
 use tower_http::cors::{Any, CorsLayer};
+use tower_http::normalize_path::NormalizePathLayer;
 use tracing::info;
 use tracing_subscriber::EnvFilter;
 
@@ -51,6 +52,7 @@ async fn main() {
         .route("/", get(root))
         .merge(handlers::exampleitem::router())
         .layer(cors)
+        .layer(NormalizePathLayer::trim_trailing_slash())
         .with_state(state);
 
     let addr = format!("0.0.0.0:{}", cfg.port);
